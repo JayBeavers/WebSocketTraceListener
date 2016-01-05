@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 
-[assembly: AssemblyTitle("JayBeavers.WebTraceListener")]
+[assembly: AssemblyTitle("SampleApp")]
+[assembly: AssemblyProduct("SampleApp")]
+
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.0.0")]

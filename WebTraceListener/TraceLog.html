@@ -49,7 +49,7 @@
 
         $(function () {
 
-            var connection = new WebSocket('ws://localhost:8080');
+            var connection = new WebSocket('ws://' + location.host);
 
             connection.onopen = function () {
                 display('Connected', 'Information');

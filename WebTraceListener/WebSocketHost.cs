@@ -39,7 +39,7 @@ namespace JayBeavers.WebTraceListener
             }            
 
             _listener = new HttpListener();
-            _listener.Prefixes.Add("http://localhost:8080/");
+            _listener.Prefixes.Add("http://+:8080/");
             _listener.Start();
 
             _listener.GetContextAsync().ContinueWith(Connection);

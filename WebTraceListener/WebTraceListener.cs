@@ -1,14 +1,23 @@
 ﻿using System.Diagnostics;
 using System.Globalization;
+using System.Net;
 
 namespace JayBeavers.WebTraceListener
 {
     public class WebTraceListener : TraceListener
     {
+        private readonly bool _enabled;
 
         public WebTraceListener()
         {
-            WebSocketHost.Start();
+            try
+            {
+                WebSocketHost.Start();
+                _enabled = true;
+            }
+            catch (HttpListenerException)
+            {
+            }
         }
 
         public override void Write(string message)
@@ -17,27 +26,39 @@ namespace JayBeavers.WebTraceListener
 
         public override void WriteLine(string message)
         {
-            WebSocketHost.Send(message);
+            if (_enabled)
+            {
+                WebSocketHost.Send(message);
+            }
         }
 
         public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id)
         {
-            WebSocketHost.Send($"{eventType}:{id} - {source}");
+            if (_enabled)
+            {
+                WebSocketHost.Send($"{eventType}:{id} - {source}");
+            }
         }
 
         public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id,
             string message)
         {
-            WebSocketHost.Send($"{eventType}:{message} - {source}");
+            if (_enabled)
+            {
+                WebSocketHost.Send($"{eventType}:{message} - {source}");
+            }
         }
 
         public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id,
             string format, params object[] args)
         {
-            // ReSharper disable ConditionIsAlwaysTrueOrFalse
-            WebSocketHost.Send(args == null
-                ? $"{eventType}:{format} - {source}"
-                : $"{eventType}:{string.Format(CultureInfo.InvariantCulture, format, args)} - {source}");
+            if (_enabled)
+            {
+                // ReSharper disable ConditionIsAlwaysTrueOrFalse
+                WebSocketHost.Send(args == null
+                    ? $"{eventType}:{format} - {source}"
+                    : $"{eventType}:{string.Format(CultureInfo.InvariantCulture, format, args)} - {source}");
+            }
         }
     }
 }

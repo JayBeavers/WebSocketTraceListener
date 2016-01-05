@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using JayBeavers.WebTraceListener;
 
-namespace JayBeavers.WebTraceListener
+namespace SampleApp
 {
 
     class Program
