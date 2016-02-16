@@ -8,15 +8,16 @@ namespace JayBeavers.WebTraceListener
     {
         private readonly bool _enabled;
 
-        public WebTraceListener()
+        public WebTraceListener(int port = 8080)
         {
             try
             {
-                WebSocketHost.Start();
+                WebSocketHost.Start(port);
                 _enabled = true;
             }
             catch (HttpListenerException)
             {
+                Trace.WriteLine("Unable to open port 8080 for listening, WebTraceListener disabled.");
             }
         }
 

@@ -21,7 +21,7 @@ namespace JayBeavers.WebTraceListener
         readonly WebSocket _webSocket;
         readonly byte[] _buffer;
 
-        internal static void Start()
+        internal static void Start(int port)
         {
             var assembly = Assembly.GetExecutingAssembly();
 
@@ -39,7 +39,7 @@ namespace JayBeavers.WebTraceListener
             }            
 
             _listener = new HttpListener();
-            _listener.Prefixes.Add("http://+:8080/");
+            _listener.Prefixes.Add("http://+:" + port + "/");
             _listener.Start();
 
             _listener.GetContextAsync().ContinueWith(Connection);
